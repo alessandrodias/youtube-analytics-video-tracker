@@ -1,72 +1,41 @@
 <!DOCTYPE html>
-<head>
-	<meta charset="utf-8">
-	<title>Teste Yt Tracking</title>
-</head>
-<style>
-	body {
-		width: 960px;
-		margin: 100px auto 0;
-	}
-
-	.video-holder {
-		display: block;
-		text-align: center;
-	}
-</style>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>YT Tracking Demo</title>
+		<link rel="stylesheet" href="assets/css/demo.css">
+	</head>
 <body>
 
-	<div class="video-holder">
-		<div id="player"></div>
+	<div id="progress-bar" class="progress-bar">
+		You have watched the full video!!
 	</div>
 
-	<script src="yt-tracking.js"></script>
-	<script>
-		var player;
+	<h1 class="page-title">YT Tracker Demonstration</h1>
 
-		(function() {
-			_loadYouTubeIframeAPI();
-		})();
+	<div class="video-wrapper">
+		<div class="video-holder">
+			<div id="player"></div>
+		</div>
+	</div>
 
-		function _loadYouTubeIframeAPI() {
-			var tag = document.createElement('script');
-			tag.src = "https://www.youtube.com/iframe_api";
-			var firstScriptTag = document.getElementsByTagName('script')[0];
-			firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-		}
+	<div class="percentages-holder">
+		<p class="title">Watched percentages</p>
+		<ol id="percentages-list" class="percentages-list">
+			<li data-percentage="0">PLAY</li>
+			<li data-percentage="25">25%</li>
+			<li data-percentage="50">50%</li>
+			<li data-percentage="75">75%</li>
+			<li data-percentage="100">100%</li>
+		</ol>
+	</div>
 
-		window.onYouTubeIframeAPIReady = function() {
-			_embedYoutubeVideo('player');
-		};
-
-		function _embedYoutubeVideo(playerId) {
-			player = new YT.Player(playerId, {
-				height: '455',
-				width: '621',
-				videoId: 'hFjwbKMlmF4',
-				playerVars: {
-					'autoplay': 0,
-					rel: 0
-				},
-				events: {
-					'onReady': onPlayerReady,
-					'onStateChange': onStateChange
-				}
-			});
-		}
-
-		function onPlayerReady(event) {
-			event.target.tracking = new YtTracking(event.target, track, [0, 50]);
-		}
-
-		function onStateChange(event) {
-			event.target.tracking.onVideoStateChange(event.data);
-		}
-
-		function track(percentage) {
-			console.log('ga send track: ' + percentage + '%');
-		}
-
-	</script>
+	<!-- jquery - just for demo purpose -->
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
+	<!-- yt-tracker lib import -->
+	<script src="assets/js/yt-tracking.js"></script>
+	<!-- javascript for this demo -->
+	<script src="assets/js/demo.js"></script>
 </body>
 </html>
