@@ -39,3 +39,5 @@ function onPlayerReady(event) {
 ```
 
 Made with ♥ by [Alessandro Dias](https://www.facebook.com/ale.bruno.dias) and [Ginaldo Terencio](https://github.com/ginaldoterencio).
+
+Design of the [Demo Page](http://alessandrodias.github.io/youtube-tracker) by [Matheus Porto](https://www.facebook.com/matheus.portoo).
