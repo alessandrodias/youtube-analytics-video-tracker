@@ -1,0 +1,215 @@
+@font-face {
+  font-family: 'bebas_neue_regularregular';
+  src: url('../fonts/bebasneue_regular-webfont.eot');
+  src: url('../fonts/bebasneue_regular-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/bebasneue_regular-webfont.woff2') format('woff2'),
+       url('../fonts/bebasneue_regular-webfont.woff') format('woff'),
+       url('../fonts/bebasneue_regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'bebas_neuethin';
+  src: url('../fonts/bebasneue_thin-webfont.eot');
+  src: url('../fonts/bebasneue_thin-webfont.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/bebasneue_thin-webfont.woff2') format('woff2'),
+       url('../fonts/bebasneue_thin-webfont.woff') format('woff'),
+       url('../fonts/bebasneue_thin-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+	min-height: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	position: relative;
+	font-family: 'bebas_neue_regularregular', Arial, sans-serif;
+	font-size: 16px;
+	padding: 0;
+	margin: 0 auto;
+	background: #000;
+	color: #fff;
+	text-align: center;
+}
+
+/* Video */
+.video-holder {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+	z-index: -100;
+}
+
+.video-holder iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* Progress Bar */
+.progress-holder {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+.progress-bar {
+	position: relative;
+	display: block;
+	width: 0;
+	height: 10px;
+	background: #E62117;
+	-webkit-transition: .3s all ease;
+	transition: .3s all ease;
+	z-index: 105;
+}
+
+.progress-marker {
+	display: block;
+	height: 30px;
+	width: 40px;
+	border-radius: 5px;
+	background: #E62117;
+	font-family: 'bebas_neue_regularregular', Arial, serif;
+	font-size: 20px;
+	line-height: 30px;
+	color: #fff;
+	margin: 0 0 0 -20px;
+	-webkit-transition: .5s all cubic-bezier(0.18, 0.89, 0.32, 1.28);
+	transition: .5s all cubic-bezier(0.18, 0.89, 0.32, 1.28);
+	position: absolute;
+	bottom: -30px;
+	z-index: 100;
+}
+
+	.progress-marker.watched { bottom: 25px; }
+
+	.progress-marker.p20  { left: 20%; }
+	.progress-marker.p40  { left: 40%; }
+	.progress-marker.p60  { left: 60%; }
+	.progress-marker.p80  { left: 80%; }
+	.progress-marker.p100 {
+		left: 50%;
+		width: 100px;
+		margin-left: -50px;
+		-webkit-transition: 1s all cubic-bezier(0.18, 0.89, 0.32, 1.28);
+		transition: 1s all cubic-bezier(0.18, 0.89, 0.32, 1.28);
+	}
+
+	.progress-marker:after {
+		content: "";
+		position: absolute;
+		bottom: -20px;
+		left: 50%;
+		margin: 0 0 0 -10px;
+		border: 10px solid transparent;
+		border-top-color: #E62117;
+		z-index: 9999;
+	}
+
+/* Content */
+.content-wrapper {
+	display: block;
+	background: url('../images/pattern.png') 0 0 repeat;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+}
+
+.content-holder {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
+	z-index: 101;
+}
+
+.page-title {
+	display: block;
+	font-size: 90px;
+	color: #fff;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	margin: 0;
+	padding: 0;
+}
+
+.page-title span {
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 60px;
+	margin-right: 5px;
+	font-family: 'bebas_neuethin', Arial, serif;
+	background: #E62117;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.page-subtitle {
+	display: block;
+	font-size: 25px;
+	color: #fff;
+	margin: 10px 0 0;
+	padding: 0;
+}
+
+/* Fork Me */
+.github-corner {
+	position: fixed;
+	top: 0;
+	right: 0;
+	border: 0;
+	color: #fff;
+	z-index: 101;
+	outline: none;
+}
+
+.github-corner:hover .octo-arm {
+	-webkit-animation: octocat-wave 560ms ease-in-out;
+	animation: octocat-wave 560ms ease-in-out;
+}
+
+.github-corner:focus,
+.github-corner:visited {
+	outline: none;
+	border: 0;
+}
+
+@keyframes octocat-wave {
+	0%, 100%{
+		transform:rotate(0);
+	}
+	20%, 60%{
+		transform: rotate(-25deg);
+	}
+	40%, 80% {
+		transform:rotate(10deg);
+	}
+}
+
+@media screen and (max-width: 500px) {
+	.github-corner:hover .octo-arm{ animation:none; }
+	.github-corner .octo-arm{ animation:octocat-wave 560ms ease-in-out; }
+}
+
+@media screen and (max-width: 761px) {
+
+}
