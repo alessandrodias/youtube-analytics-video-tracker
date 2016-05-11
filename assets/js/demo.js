@@ -44,7 +44,7 @@
 		}
 
 		function onPlayerReady(event) {
-			event.target.tracking = new YtTracking(event.target, updateList, [20, 40, 60, 80, 100]);
+			event.target.tracking = new YtTracking(event.target, updateList, [0, 20, 40, 60, 80, 100]);
 			player.setVolume(0);
 			player.playVideo();
 		}
