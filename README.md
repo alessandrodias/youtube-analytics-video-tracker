@@ -15,6 +15,12 @@ Import the library before your closing `<body>` tag:
 <script type="text/javascript" src="yt-tracking.min.js"></script>
 ```
 
+Or install using **bower**:
+
+```
+bower install youtube-tracker
+```
+
 ## Usage ##
 
 You will need to apply the listeners on the following YouTube API callback events:

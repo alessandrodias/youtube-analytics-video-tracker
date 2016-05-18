@@ -1,3 +1,9 @@
+/*
+  Author: Alessandro Dias
+    Demo: http://alessandrodias.github.io/youtube-tracker
+    Repo: https://github.com/alessandrodias/youtube-tracker
+ */
+
 ;(function(window, document, undefined) {
 	"use strict";
 
