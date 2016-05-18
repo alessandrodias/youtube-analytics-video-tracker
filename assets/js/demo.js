@@ -44,7 +44,10 @@
 		}
 
 		function onPlayerReady(event) {
-			event.target.tracking = new YtTracking(event.target, updateList, [0, 20, 40, 60, 80, 100]);
+			event.target.tracking = new YtTracking(event.target, {
+				trackings: ['15s','30s','0p','20p','40p','60p','80p','100p'],
+				callback: updateList
+			});
 			player.setVolume(0);
 			player.playVideo();
 		}
@@ -54,16 +57,19 @@
 		}
 
 		function updateList(percentage) {
-			progressBar.css('width', percentage + '%');
 
-			if (percentage !== 100) {
-				$('.progress-marker.p' + percentage).addClass('watched');
-			} else {
-				$('.progress-marker').removeClass('watched');
-				setTimeout(function() {
+			if (percentage.indexOf('p') > -1) {
+				percentage = percentage.replace('p','');
+				progressBar.css('width', percentage + '%');
+
+				if (percentage == 100) {
+					$('.progress-marker').removeClass('watched');
 					$('.progress-marker.p' + percentage).addClass('watched');
-				}, 1000);
+				} else {
+					$('.progress-marker.p' + percentage).addClass('watched');
+				}
 			}
+
 		}
 
 	};

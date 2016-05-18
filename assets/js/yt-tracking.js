@@ -2,32 +2,30 @@
 	"use strict";
 
 	/**	----- YouTube Video States -----
-	* 	[-1] Not Started
-	* 	 [0] Ended
-	* 	 [1] Playing
-	* 	 [2] Paused
+	* 	 [-1] Not Started
+	* 	 [0]  Ended
+	* 	 [1]  Playing
+	* 	 [2]  Paused
 	*/
 
-	function YtTracking(player, callback, percentages) {
+	function YtTracking(player, options) {
 		if ((player === null) || (player === undefined)) {
 			throw new Error('Missing player param!');
-		}
-
-		if ((callback === null) || (callback === undefined)) {
-			throw new Error('Missing callback param!');
+			return;
 		}
 
 		this.player = player;
-		this.callback = callback;
-		this.percentages = percentages || [0, 25, 50, 75];
-		this.trackings = [];
+		this.trackValues = options.trackings || ['0%', '25%', '50%', '75%', '100%'];
+		this.callback = options.callback;
+		this.trackList = [];
 		this.videoTimer = null;
-		this.setupTrackings();
+
+		this.setupTrackList();
 	}
 
-	YtTracking.prototype.setupTrackings = function() {
-		for(var i = 0, j = this.percentages.length; i < j; i++) {
-			this.trackings[this.percentages[i]] = false;
+	YtTracking.prototype.setupTrackList = function() {
+		for(var i = 0, j = this.trackValues.length; i < j; i++) {
+			this.trackList[this.trackValues[i]] = false;
 		}
 	};
 
@@ -37,48 +35,65 @@
 				this.startVideoTimer();
 				break;
 			case YT.PlayerState.ENDED:
-				if ( this.percentages.indexOf(100) >= 0 ) {
-					this.publish(100);
-				}
-				this.pauseVideoTimer();
+				this.verifyVideoTime();
+				this.stopVideoTimer();
 				break;
 			default:
-				this.pauseVideoTimer();
+				this.stopVideoTimer();
 				break;
 		}
 	};
 
 	YtTracking.prototype.startVideoTimer = function() {
-		var _this = this;
-
+		var _self = this;
 		this.videoTimer = setInterval( function() {
-			_this.verifyVideoTime();
+			_self.verifyVideoTime();
 		}, 1000);
 	};
 
-	YtTracking.prototype.pauseVideoTimer = function() {
+	YtTracking.prototype.stopVideoTimer = function() {
 		clearInterval(this.videoTimer);
 	};
 
 	YtTracking.prototype.verifyVideoTime = function() {
-		var totalTime = this.player.getDuration(),
-			elapsedTime = this.player.getCurrentTime(),
-			percentage = 0;
+		var totalTime, elapsedTime, type, currentValue, percentage = 0;
 
-		percentage = ((100 * elapsedTime) / totalTime);
+		totalTime = this.player.getDuration();
+		elapsedTime = Math.round( this.player.getCurrentTime() );
 
-		for(var i = 0, j = this.percentages.length; i < j; i++) {
+		for(var i = 0, j = this.trackValues.length; i < j; i++) {
 
-			if ( (percentage >= this.percentages[i]) && (this.trackings[this.percentages[i]] === false) ) {
-				this.trackings[this.percentages[i]] = true;
-				this.publish(this.percentages[i]);
+			type = this.trackValues[i].substr( this.trackValues[i].length -1 );
+			currentValue = this.trackValues[i].replace(/[a-z]/g,"");
+
+			if (type === 'p') {
+
+				// tracking by percentage
+				percentage = Math.round( ((100 * elapsedTime) / totalTime) );
+
+				if ( (percentage >= currentValue) && (this.trackList[this.trackValues[i]] === false) ) {
+					this.refreshTrackList(this.trackValues[i]);
+				}
+
+			} else if (type === 's') {
+
+				// tracking by seconds
+				if ( (elapsedTime >= currentValue) && (this.trackList[this.trackValues[i]] === false) ) {
+					this.refreshTrackList(this.trackValues[i]);
+				}
+
 			}
 		}
 	};
 
-	YtTracking.prototype.publish = function(percentage) {
+	YtTracking.prototype.refreshTrackList = function(track_value) {
+		this.trackList[track_value] = true;
+		this.publish(track_value);
+	}
+
+	YtTracking.prototype.publish = function(trackValue) {
 		if ( (this.callback) && (typeof this.callback === 'function') ) {
-			this.callback(percentage);
+			this.callback(trackValue);
 		}
 	};
 
