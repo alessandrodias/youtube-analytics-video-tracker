@@ -1,11 +1,7 @@
 YouTube Tracker
 ---
 
-A simple javascript library for tracking YouTube videos.
-
-## Demo ##
-
-[http://alessandrodias.github.io/youtube-tracker](http://alessandrodias.github.io/youtube-tracker/)
+A simple javascript library for tracking watched percentage or seconds on YouTube videos.
 
 ## Installation ##
 
@@ -15,15 +11,9 @@ Import the library before your closing `<body>` tag:
 <script type="text/javascript" src="yt-tracking.min.js"></script>
 ```
 
-Or install using **bower**:
-
-```
-bower install youtube-tracker
-```
-
 ## Usage ##
 
-You will need to apply the listeners on the following YouTube API callback events:
+1. Apply the listeners on the following YouTube API callback events:
 
 ```javascript
 events: {
@@ -32,9 +22,9 @@ events: {
 }
 ```
 
-Then, create the following callback functions you defined, reciving the `event` as a parameter.
+2. Create the callback functions, reciving the `event` as a parameter.
 
-You need to specify the **tracking values** you want to watch for, and the **callback** function
+Here you need to specify the **tracking values** you want to watch for:
 
 ```javascript
 function onPlayerReady(event) {
@@ -55,8 +45,19 @@ function myCallbackFunction(track_value) {
 
 By default, it tracks the following percentages: 0%, 25%, 50%, 75%, 100%
 
-### Contributors ###
+### Options ###
 
-Made by [Alessandro Dias](https://www.facebook.com/ale.bruno.dias) and [Ginaldo Terencio](https://github.com/ginaldoterencio)
+You can use the postfix `p` to track `percentage`:
+```
+  trackings: ['25p','50p','75p','100p'],
+```
 
-[Demo Page](http://alessandrodias.github.io/youtube-tracker) designed by [Matheus Porto](https://www.facebook.com/matheus.portoo)
+Or  `s` to track `seconds`:
+```
+  trackings: ['30s', '60s', '90s'],
+```
+
+Or you can mix them together:
+```
+  trackings: ['30s', '50p', '100p'],
+```
