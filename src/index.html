@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="player"></div>
+
+    <!-- 1. Import the library code -->
+    <script src="./yt-tracking.js"></script>
+    <script>
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '360',
+          width: '640',
+          videoId: 'M7lc1UVf-VE',
+          // 2. setup `onReady` and `onStateChange` callbacks
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+          }
+        });
+      }
+
+      function onPlayerReady(event) {
+        event.target.playVideo();
+
+        // 3. Construct the class
+        event.target.tracking = new YtTracking(event.target, {
+          trackings: ['5s','10s','0%','25%','50%','75%','100%'],
+          callback: myCallbackFunction
+        });
+      }
+
+      var done = false;
+      function onPlayerStateChange(event) {
+        // 4. Apply the listener to the `onVideoStateChange` event
+        event.target.tracking.onVideoStateChange(event.data);
+
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+
+      function stopVideo() {
+        player.stopVideo();
+      }
+
+      // 5. Send the track event to Google Analytics
+      function myCallbackFunction(trackValue) {
+        console.log('Tracked: ', trackValue);
+
+        // Sample:
+        // window.gtag('event', 'Watch Video, {
+        //   event_category: 'YouTube',
+        //   event_label: `User watched ${trackValue}`,
+        // })
+      }
+    </script>
+
+  </body>
+</html>
